@@ -1,0 +1,33 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <h4>NOT EVALUATED</h4>
+        <ul class="list-group">
+          {% for i in data.not_evaluated%}
+            <li class="list-group-item list-group-item-info"> <a href="{% url 'response_detail' i.id %}">{{i.user.first_name}} {{i.user.last_name}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-4">
+        <h4>EVALUATED</h4>
+        <ul class="list-group">
+          {% for i in data.evaluated%}
+            <li class="list-group-item list-group-item-warning"><a href="{% url 'response_detail' i.id %}">{{i.user.first_name}} {{i.user.last_name}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-4">
+        <h4>ELIMINATED</h4>
+        <ul class="list-group">
+          {% for i in data.eliminated%}
+            <li class="list-group-item list-group-item-danger"><a href="{% url 'response_detail' i.id %}">{{i.user.first_name}} {{i.user.last_name}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

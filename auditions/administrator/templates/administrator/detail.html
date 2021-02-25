@@ -1,0 +1,76 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="card">
+    <h4 class="card-header">
+      Personal Info
+    </h4>
+    <div class="card-body">
+      <h5 class="card-title">{{data.profile.user.first_name}} {{data.profile.user.last_name}}</h5>
+      <p class="card-text">Email - {{data.profile.user.email}}</p>
+      <p class="card-text">Phone Number - ########## <---- YET TO BE DONE</p>
+
+    </div>
+  </div>
+  <ul style="list-style:none ;margin:0;padding:0">
+    {% for i in data.response %}
+    <li>
+      <div class="card">
+        {% if i.question.image%}
+          <img src="{{i.question.image.url}}" class="card-img-top" alt="question_image">
+        {% endif %}
+        <h6 class="card-header">
+          Question - {{i.question.ques_round}}
+        </h6>
+        <div class="card-body">
+          <h6 class="card-text">{{i.question.text}}</h6>
+          <p class="card-title">Response - {{i.response}}</p>
+        </div>
+      </div>
+    </li>
+   {% endfor %}
+  </ul>
+</div>
+<div class="container">
+  <h3>Review Form</h3>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Name</label>
+      <input id = "namefield" type="text" class="form-control" name="author" placeholder="Your Name Here ..">
+      <small class="form-text text-muted">
+        Please use your real and full name .
+      </small>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Review</label>
+      <textarea id = "commentfield" class="form-control" rows="4" name="comment" placeholder="Your Comment Here .."></textarea>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="eliminate">
+      <label class="form-check-label" >Eliminate Participant !</label>
+      <small class="form-text text-muted">
+        If you check this box this participant will be permanently eliminated.
+      </small>
+    </div>
+    <button id="button" type="submit" class="btn btn-primary">Submit Review</button>
+  </form>
+  <h3>Past Reviews</h3>
+  {% for review in data.reviews %}
+    <div class="card text-center">
+      <div class="card-header">
+        {{review.author}}
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{review.comment}}</p>
+      </div>
+      <div class="card-footer text-muted">
+        {{review.date_time}}
+      </div>
+    </div>
+  {% endfor %}
+  
+</div>
+
+{% endblock %}
